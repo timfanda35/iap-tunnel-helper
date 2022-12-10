@@ -1,0 +1,106 @@
+{
+  "build": {
+    "beforeDevCommand": "yarn dev",
+    "beforeBuildCommand": "yarn build",
+    "devPath": "http://localhost:1420",
+    "distDir": "../dist",
+    "withGlobalTauri": false
+  },
+  "package": {
+    "productName": "iap-tunnel",
+    "version": "0.0.0"
+  },
+  "tauri": {
+    "allowlist": {
+      "dialog": {
+        "all": true
+      },
+      "shell": {
+        "all": true,
+        "scope": [
+          {
+            "name": "get-google-projects",
+            "cmd": "gcloud",
+            "args": ["projects", "list", "--format=json"]
+          },
+          {
+            "name": "get-google-account",
+            "cmd": "gcloud",
+            "args": ["config", "get", "account"]
+          },
+          {
+            "name": "get-gce-instances",
+            "cmd": "gcloud",
+            "args": ["compute", "instances", "list", "--format=json", "--project", { "validator": ".+" }]
+          },
+          {
+            "name": "start-iap-tunnel",
+            "cmd": "gcloud",
+            "args": [
+              "compute",
+              "start-iap-tunnel",
+              "--project", { "validator": ".+" },
+              "--zone", { "validator": ".+" },
+              "--local-host-port", { "validator": ".+" },
+              { "validator": ".+" },
+              { "validator": ".+" }
+            ]
+          },
+          {
+            "name": "check-gcloud",
+            "cmd": "which",
+            "args": ["gcloud"]
+          }
+        ]
+      }
+    },
+    "bundle": {
+      "active": true,
+      "category": "DeveloperTool",
+      "copyright": "",
+      "deb": {
+        "depends": []
+      },
+      "externalBin": [],
+      "icon": [
+        "icons/32x32.png",
+        "icons/128x128.png",
+        "icons/128x128@2x.png",
+        "icons/icon.icns",
+        "icons/icon.ico"
+      ],
+      "identifier": "iap-tunnel.bear-su.dev",
+      "longDescription": "",
+      "macOS": {
+        "entitlements": null,
+        "exceptionDomain": "",
+        "frameworks": [],
+        "providerShortName": null,
+        "signingIdentity": null
+      },
+      "resources": [],
+      "shortDescription": "",
+      "targets": "all",
+      "windows": {
+        "certificateThumbprint": null,
+        "digestAlgorithm": "sha256",
+        "timestampUrl": ""
+      }
+    },
+    "security": {
+      "csp": null
+    },
+    "updater": {
+      "active": false
+    },
+    "windows": [
+      {
+        "fullscreen": false,
+        "height": 600,
+        "resizable": true,
+        "title": "iap-tunnel",
+        "width": 800
+      }
+    ]
+  }
+}
